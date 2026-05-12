@@ -22,6 +22,7 @@ import { createBannerModel } from './banner';
 import { createPresetModel } from './preset';
 import { createPromptModel } from './prompt';
 import { createMemoryModel } from './memory';
+import { createAuditLogModel } from './auditLog';
 import { createConfigModel } from './config';
 import { createTokenModel } from './token';
 import { createAgentModel } from './agent';
@@ -67,6 +68,7 @@ export function createModels(mongoose: typeof import('mongoose')): {
   AccessRole: ReturnType<typeof createAccessRoleModel>;
   AclEntry: ReturnType<typeof createAclEntryModel>;
   SystemGrant: ReturnType<typeof createSystemGrantModel>;
+  AuditLog: ReturnType<typeof createAuditLogModel>;
   Group: ReturnType<typeof createGroupModel>;
   Config: ReturnType<typeof createConfigModel>;
 } {
@@ -102,6 +104,7 @@ export function createModels(mongoose: typeof import('mongoose')): {
     AccessRole: createAccessRoleModel(mongoose),
     AclEntry: createAclEntryModel(mongoose),
     SystemGrant: createSystemGrantModel(mongoose),
+    AuditLog: createAuditLogModel(mongoose),
     Group: createGroupModel(mongoose),
     Config: createConfigModel(mongoose),
   };
