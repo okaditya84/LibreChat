@@ -10,6 +10,7 @@ import { useListSkillsQuery } from '~/data-provider';
 import { useAgentPanelContext } from '~/Providers';
 import MarketplaceSidebar from './MarketplaceSidebar';
 import MarketplaceCatalog from './MarketplaceCatalog';
+import DetailPane from './DetailPane/DetailPane';
 import { computeToggleAction } from './items/mutations';
 import { deriveSelectedItems } from './items/selectors';
 import { applyFilter } from './items/filtering';
@@ -59,6 +60,7 @@ export default function ToolsMarketplaceDialog({
   const [kind, setKind] = useState<Kind>('all');
   const [category, setCategory] = useState<string | 'all'>('all');
   const [search, setSearch] = useState('');
+  const [detailItem, setDetailItem] = useState<AgentItem | null>(null);
 
   const agentActions = useMemo(
     () => (actions ?? []).filter((a) => a.agent_id === agentId),
@@ -177,6 +179,25 @@ export default function ToolsMarketplaceDialog({
     [getValues, setValue, selectedIds],
   );
 
+  const handleCardClick = useCallback(
+    (item: AgentItem) => {
+      const wasSelected = selectedIds.has(item.id);
+      if (!wasSelected) {
+        handleToggle(item);
+      }
+      setDetailItem(item);
+    },
+    [handleToggle, selectedIds],
+  );
+
+  const handleRemoveFromDetail = useCallback(
+    (item: AgentItem) => {
+      handleToggle(item);
+      setDetailItem(null);
+    },
+    [handleToggle],
+  );
+
   return (
     <OGDialog open={open} onOpenChange={onOpenChange}>
       <OGDialogContent
@@ -222,10 +243,18 @@ export default function ToolsMarketplaceDialog({
               <MarketplaceCatalog
                 items={filtered}
                 selectedIds={selectedIds}
-                onToggle={handleToggle}
+                onToggle={handleCardClick}
               />
             </div>
           </div>
+          {detailItem && (
+            <DetailPane
+              item={detailItem}
+              agentId={agentId}
+              onClose={() => setDetailItem(null)}
+              onRemove={() => handleRemoveFromDetail(detailItem)}
+            />
+          )}
         </div>
       </OGDialogContent>
     </OGDialog>

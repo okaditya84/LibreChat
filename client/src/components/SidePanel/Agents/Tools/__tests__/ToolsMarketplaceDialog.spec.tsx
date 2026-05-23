@@ -56,6 +56,27 @@ jest.mock('@librechat/client', () => {
   };
 });
 
+jest.mock('../DetailPane/BuiltinDetail', () => ({
+  __esModule: true,
+  default: () => <div data-testid="builtin-detail" />,
+}));
+jest.mock('../DetailPane/SkillDetail', () => ({
+  __esModule: true,
+  default: () => <div data-testid="skill-detail" />,
+}));
+jest.mock('../DetailPane/ToolDetail', () => ({
+  __esModule: true,
+  default: () => <div data-testid="tool-detail" />,
+}));
+jest.mock('../DetailPane/McpDetail', () => ({
+  __esModule: true,
+  default: () => <div data-testid="mcp-detail" />,
+}));
+jest.mock('../DetailPane/ActionDetail', () => ({
+  __esModule: true,
+  default: () => <div data-testid="action-detail" />,
+}));
+
 describe('ToolsMarketplaceDialog', () => {
   beforeEach(() => {
     mockSetValue.mockClear();
@@ -95,7 +116,13 @@ describe('ToolsMarketplaceDialog', () => {
   test('clicking the close button calls onOpenChange(false)', () => {
     const onOpenChange = jest.fn();
     render(<ToolsMarketplaceDialog open onOpenChange={onOpenChange} agentId="a1" />);
-    fireEvent.click(screen.getByLabelText('com_ui_tools_close'));
+    fireEvent.click(screen.getAllByLabelText('com_ui_tools_close')[0]);
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  test('clicking an unselected tool card opens the detail pane', () => {
+    render(<ToolsMarketplaceDialog open onOpenChange={jest.fn()} agentId="a1" />);
+    fireEvent.click(screen.getByRole('button', { name: /DALL-E/ }));
+    expect(screen.getByTestId('tool-detail')).toBeInTheDocument();
   });
 });
