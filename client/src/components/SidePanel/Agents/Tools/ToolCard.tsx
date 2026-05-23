@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 import type { AgentItem } from './items/types';
+import type { TranslationKeys } from '~/hooks/useLocalize';
 import { getIconForItem } from './items/icons';
 import { useLocalize } from '~/hooks';
 import { cn } from '~/utils';
@@ -10,10 +11,32 @@ interface ToolCardProps {
   onToggle: (item: AgentItem) => void;
 }
 
+function useDisplayStrings(item: AgentItem): { name: string; description: string } {
+  const localize = useLocalize();
+  if (item.kind === 'builtin') {
+    return {
+      name: localize(item.name as TranslationKeys),
+      description: item.description ? localize(item.description as TranslationKeys) : '',
+    };
+  }
+  return { name: item.name, description: item.description ?? '' };
+}
+
 export default function ToolCard({ item, selected, onToggle }: ToolCardProps) {
   const localize = useLocalize();
   const { Icon, colorClass } = getIconForItem(item);
+  const { name, description } = useDisplayStrings(item);
   const isOfficial = item.kind === 'builtin';
+  const kindLabelKey =
+    item.kind === 'tool'
+      ? 'com_ui_tools_kind_tools'
+      : item.kind === 'skill'
+        ? 'com_ui_tools_kind_skills'
+        : item.kind === 'mcp'
+          ? 'com_ui_tools_kind_mcp'
+          : item.kind === 'action'
+            ? 'com_ui_tools_kind_actions'
+            : null;
 
   return (
     <button
@@ -30,20 +53,23 @@ export default function ToolCard({ item, selected, onToggle }: ToolCardProps) {
         isOfficial && !selected && 'border-emerald-500/30 bg-emerald-500/[0.02]',
       )}
     >
-      <div className="flex w-full items-start gap-2">
+      <div className="flex w-full items-start gap-2.5">
         <span
-          className={cn('flex h-8 w-8 shrink-0 items-center justify-center rounded-lg', colorClass)}
+          className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-lg', colorClass)}
           aria-hidden="true"
         >
-          <Icon className="h-4 w-4" strokeWidth={1.75} />
+          <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-text-primary">{item.name}</p>
+          <p className="truncate text-sm font-semibold text-text-primary">{name}</p>
+          {!description && kindLabelKey && (
+            <p className="truncate text-xs text-text-tertiary">{localize(kindLabelKey)}</p>
+          )}
         </div>
       </div>
-      {item.description && (
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-text-secondary">
-          {item.description}
+      {description && (
+        <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-text-secondary">
+          {description}
         </p>
       )}
       <div className="mt-auto flex w-full items-center gap-1.5 pt-2">

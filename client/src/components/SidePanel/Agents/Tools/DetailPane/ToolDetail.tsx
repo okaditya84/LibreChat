@@ -16,8 +16,7 @@ export default function ToolDetail({ item, onRemove }: Props) {
     item.plugin.authConfig.length > 0 &&
     item.plugin.authenticated !== true;
   return (
-    <div className="flex flex-col gap-3">
-      <h3 className="text-base font-semibold text-text-primary">{item.name}</h3>
+    <div className="flex flex-col gap-4">
       {item.description && <p className="text-sm text-text-secondary">{item.description}</p>}
       {needsAuth && (
         <button

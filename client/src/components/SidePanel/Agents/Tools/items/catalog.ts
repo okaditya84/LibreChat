@@ -36,13 +36,13 @@ const BUILTIN_DEFINITIONS: BuiltinDef[] = [
     id: AgentCapabilities.artifacts,
     iconKey: 'artifacts',
     nameKey: 'com_ui_artifacts',
-    descriptionKey: 'com_ui_artifacts_info',
+    descriptionKey: 'com_ui_artifacts_subtext',
   },
   {
     id: AgentCapabilities.context,
     iconKey: 'context',
     nameKey: 'com_agents_file_context_label',
-    descriptionKey: 'com_agents_file_context_info',
+    descriptionKey: 'com_agents_file_context_description',
   },
   {
     id: AgentCapabilities.file_search,

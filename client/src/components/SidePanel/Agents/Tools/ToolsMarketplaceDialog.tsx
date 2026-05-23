@@ -58,7 +58,6 @@ export default function ToolsMarketplaceDialog({
 
   const [view, setView] = useState<View>('marketplace');
   const [kind, setKind] = useState<Kind>('all');
-  const [category, setCategory] = useState<string | 'all'>('all');
   const [search, setSearch] = useState('');
   const [detailItem, setDetailItem] = useState<AgentItem | null>(null);
 
@@ -133,8 +132,8 @@ export default function ToolsMarketplaceDialog({
   );
 
   const filtered = useMemo(
-    () => applyFilter(catalog, { search, kind, category, view }),
-    [catalog, search, kind, category, view],
+    () => applyFilter(catalog, { search, kind, view }),
+    [catalog, search, kind, view],
   );
 
   const handleToggle = useCallback(
@@ -208,11 +207,10 @@ export default function ToolsMarketplaceDialog({
           <MarketplaceSidebar
             activeView={view}
             activeKind={kind}
-            activeCategory={category}
             onSelectView={setView}
             onSelectKind={setKind}
-            onSelectCategory={setCategory}
             counts={counts}
+            totalCount={catalog.length}
           />
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="flex items-center gap-2 px-6 py-4">
@@ -247,15 +245,13 @@ export default function ToolsMarketplaceDialog({
               />
             </div>
           </div>
-          {detailItem && (
-            <DetailPane
-              item={detailItem}
-              agentId={agentId}
-              onClose={() => setDetailItem(null)}
-              onRemove={() => handleRemoveFromDetail(detailItem)}
-            />
-          )}
         </div>
+        <DetailPane
+          item={detailItem}
+          agentId={agentId}
+          onClose={() => setDetailItem(null)}
+          onRemove={handleRemoveFromDetail}
+        />
       </OGDialogContent>
     </OGDialog>
   );

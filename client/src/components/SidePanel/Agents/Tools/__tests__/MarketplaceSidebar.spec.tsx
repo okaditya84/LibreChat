@@ -4,30 +4,22 @@ import MarketplaceSidebar from '../MarketplaceSidebar';
 
 jest.mock('~/hooks', () => ({
   useLocalize: () => (key: string) => key,
-  useCategories: () => ({ categories: [{ value: 'code', label: 'Code', icon: null }] }),
 }));
 
 describe('MarketplaceSidebar', () => {
   const defaultProps = {
     activeView: 'marketplace' as const,
     activeKind: 'all' as const,
-    activeCategory: 'all' as const,
     onSelectView: jest.fn(),
     onSelectKind: jest.fn(),
-    onSelectCategory: jest.fn(),
     counts: { tool: 2, skill: 3, mcp: 1, action: 0, builtin: 5 },
+    totalCount: 11,
   };
 
-  test('shows the sidebar title', () => {
+  test('shows the All entry with total count', () => {
     render(<MarketplaceSidebar {...defaultProps} />);
-    expect(screen.getByText('com_ui_tools_marketplace')).toBeInTheDocument();
-  });
-
-  test('clicking a view filter calls onSelectView', () => {
-    const onSelectView = jest.fn();
-    render(<MarketplaceSidebar {...defaultProps} onSelectView={onSelectView} />);
-    fireEvent.click(screen.getByText('com_ui_tools_view_favorites'));
-    expect(onSelectView).toHaveBeenCalledWith('favorites');
+    expect(screen.getByText('com_ui_all_proper')).toBeInTheDocument();
+    expect(screen.getByText('11')).toBeInTheDocument();
   });
 
   test('clicking a kind filter calls onSelectKind', () => {
@@ -37,15 +29,26 @@ describe('MarketplaceSidebar', () => {
     expect(onSelectKind).toHaveBeenCalledWith('skill');
   });
 
-  test('clicking a category calls onSelectCategory', () => {
-    const onSelectCategory = jest.fn();
-    render(<MarketplaceSidebar {...defaultProps} onSelectCategory={onSelectCategory} />);
-    fireEvent.click(screen.getByText('Code'));
-    expect(onSelectCategory).toHaveBeenCalledWith('code');
+  test('clicking favorites switches the view filter', () => {
+    const onSelectView = jest.fn();
+    render(<MarketplaceSidebar {...defaultProps} onSelectView={onSelectView} />);
+    fireEvent.click(screen.getByText('com_ui_tools_view_favorites'));
+    expect(onSelectView).toHaveBeenCalledWith('favorites');
   });
 
-  test('renders the Create new button', () => {
-    render(<MarketplaceSidebar {...defaultProps} />);
-    expect(screen.getByText('com_ui_tools_create_new')).toBeInTheDocument();
+  test('clicking All resets both kind and view', () => {
+    const onSelectKind = jest.fn();
+    const onSelectView = jest.fn();
+    render(
+      <MarketplaceSidebar
+        {...defaultProps}
+        activeKind="builtin"
+        onSelectKind={onSelectKind}
+        onSelectView={onSelectView}
+      />,
+    );
+    fireEvent.click(screen.getByText('com_ui_all_proper'));
+    expect(onSelectKind).toHaveBeenCalledWith('all');
+    expect(onSelectView).toHaveBeenCalledWith('marketplace');
   });
 });

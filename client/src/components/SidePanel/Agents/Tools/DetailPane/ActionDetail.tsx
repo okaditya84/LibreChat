@@ -13,9 +13,15 @@ export default function ActionDetail({ item, agentId, onRemove }: Props) {
   const localize = useLocalize();
   const [editorOpen, setEditorOpen] = useState(false);
   return (
-    <div className="flex flex-col gap-3">
-      <h3 className="text-base font-semibold text-text-primary">{item.name}</h3>
-      <p className="text-sm text-text-secondary">{item.endpointCount}</p>
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-text-secondary">
+        {localize(
+          item.endpointCount === 1
+            ? 'com_ui_tools_endpoint_count_one'
+            : 'com_ui_tools_endpoint_count',
+          { count: item.endpointCount },
+        )}
+      </p>
       <button
         type="button"
         onClick={() => setEditorOpen(true)}

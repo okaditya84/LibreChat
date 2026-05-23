@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import type { AgentItem } from './items/types';
+import type { TranslationKeys } from '~/hooks/useLocalize';
 import { getIconForItem } from './items/icons';
 import { useLocalize } from '~/hooks';
 import { cn } from '~/utils';
@@ -20,6 +21,7 @@ export default function ToolChip({ item, onClick, onRemove }: Props) {
   const localize = useLocalize();
   const { Icon, colorClass } = getIconForItem(item);
   const suffix = getSuffix(item);
+  const displayName = item.kind === 'builtin' ? localize(item.name as TranslationKeys) : item.name;
 
   return (
     <span className="group relative inline-flex items-center">
@@ -34,7 +36,7 @@ export default function ToolChip({ item, onClick, onRemove }: Props) {
         >
           <Icon className="h-3 w-3" strokeWidth={2} />
         </span>
-        <span className="max-w-[14ch] truncate">{item.name}</span>
+        <span className="max-w-[14ch] truncate">{displayName}</span>
         {suffix && <span className="text-text-tertiary">{suffix}</span>}
       </button>
       {item.status === 'needs_setup' && (

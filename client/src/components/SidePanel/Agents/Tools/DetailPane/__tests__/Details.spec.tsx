@@ -70,10 +70,10 @@ const actionItem: ActionItem = {
 };
 
 describe('Detail pane bodies', () => {
-  test('SkillDetail renders name and remove button', () => {
+  test('SkillDetail renders description and remove button', () => {
     const onRemove = jest.fn();
     render(<SkillDetail item={skillItem} onRemove={onRemove} />);
-    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.getByText('Desc')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /com_ui_tools_remove/ }));
     expect(onRemove).toHaveBeenCalled();
   });

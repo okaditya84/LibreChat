@@ -13,9 +13,12 @@ export default function McpDetail({ item, onRemove }: Props) {
   const [varsOpen, setVarsOpen] = useState(false);
   const isConfigured = item.server.isConfigured === true;
   return (
-    <div className="flex flex-col gap-3">
-      <h3 className="text-base font-semibold text-text-primary">{item.name}</h3>
-      <p className="text-sm text-text-secondary">{item.toolCount}</p>
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-text-secondary">
+        {localize(item.toolCount === 1 ? 'com_ui_tools_count_one' : 'com_ui_tools_count', {
+          count: item.toolCount,
+        })}
+      </p>
       {!isConfigured && (
         <button
           type="button"
