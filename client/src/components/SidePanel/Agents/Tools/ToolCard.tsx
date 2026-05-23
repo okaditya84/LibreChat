@@ -87,7 +87,7 @@ export default function ToolCard({ item, selected, onToggle }: ToolCardProps) {
       onMouseDown={(e) => e.preventDefault()}
       aria-pressed={selected}
       className={cn(
-        'group relative flex h-32 cursor-pointer flex-col gap-2 rounded-2xl border p-4 text-left transition-all duration-200',
+        'group relative flex h-32 w-full cursor-pointer flex-col gap-2 rounded-2xl border p-4 text-left transition-all duration-200',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring-primary',
         selected
           ? 'border-emerald-500/60 bg-emerald-500/[0.06] shadow-sm'
