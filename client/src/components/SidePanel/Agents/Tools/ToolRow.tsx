@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Info, X } from 'lucide-react';
 import type { AgentItem } from './items/types';
 import type { TranslationKeys } from '~/hooks/useLocalize';
@@ -50,7 +50,7 @@ function RowIcon({ item }: { item: AgentItem }) {
   );
 }
 
-export default function ToolRow({ item, onInfo, onRemove, dataState }: Props) {
+function ToolRowImpl({ item, onInfo, onRemove, dataState }: Props) {
   const localize = useLocalize();
   const suffix = getSuffix(item);
   const displayName = item.kind === 'builtin' ? localize(item.name as TranslationKeys) : item.name;
@@ -111,3 +111,6 @@ export default function ToolRow({ item, onInfo, onRemove, dataState }: Props) {
     </div>
   );
 }
+
+const ToolRow = memo(ToolRowImpl);
+export default ToolRow;

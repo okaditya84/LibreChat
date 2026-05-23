@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { BadgeCheck, Check, Settings } from 'lucide-react';
 import type { AgentItem } from './items/types';
 import type { TranslationKeys } from '~/hooks/useLocalize';
@@ -82,7 +82,7 @@ function ItemIconView({ item, size }: ItemIconProps) {
   );
 }
 
-export default function ToolCard({ item, selected, onToggle, onConfigure }: ToolCardProps) {
+function ToolCardImpl({ item, selected, onToggle, onConfigure }: ToolCardProps) {
   const localize = useLocalize();
   const { name, description } = useDisplayStrings(item);
   const isNative = item.kind === 'builtin';
@@ -179,3 +179,6 @@ export default function ToolCard({ item, selected, onToggle, onConfigure }: Tool
     </div>
   );
 }
+
+const ToolCard = memo(ToolCardImpl);
+export default ToolCard;
