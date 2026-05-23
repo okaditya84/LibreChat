@@ -123,16 +123,15 @@ export default function ToolCard({ item, selected, onToggle, onConfigure }: Tool
                   />
                 )}
               </p>
-              <span
-                className={cn(
-                  't-success-check',
-                  'flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white',
-                )}
-                data-state={selected ? 'in' : 'out'}
-                aria-hidden="true"
-              >
-                <Check className="size-3" strokeWidth={3} />
-              </span>
+              {selected && (
+                <span
+                  className="t-success-check flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white"
+                  data-state="in"
+                  aria-hidden="true"
+                >
+                  <Check className="size-3" strokeWidth={3} />
+                </span>
+              )}
             </div>
             <p className="truncate text-[11px] uppercase tracking-wide text-text-tertiary">
               {kindLabel}

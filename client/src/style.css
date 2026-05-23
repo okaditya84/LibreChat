@@ -3025,11 +3025,11 @@ html {
   display: inline-flex;
   transform-origin: center;
   opacity: 0;
-  will-change: transform, opacity, filter;
   transition: opacity var(--check-out-dur) var(--check-ease-out);
 }
 
 .t-success-check[data-state="in"] {
+  will-change: transform, opacity, filter;
   animation:
     t-check-fade var(--check-opacity-dur) var(--check-ease-opacity) forwards,
     t-check-rotate var(--check-rotate-dur) var(--check-ease-rotate) forwards,
@@ -3056,7 +3056,6 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .t-success-check { animation: none !important; opacity: 1; transition: none; }
-  .t-success-check[data-state="out"] { opacity: 0; }
 }
 
 /* Marketplace card selection ring transition */
@@ -3091,12 +3090,12 @@ html {
     opacity var(--list-item-enter-dur) var(--list-item-ease),
     filter var(--list-item-enter-dur) var(--list-item-ease),
     background-color 150ms var(--list-item-ease);
-  will-change: transform, opacity, filter;
 }
 .t-list-item[data-state="enter"] {
   opacity: 0;
   transform: translateX(calc(var(--list-item-translate-x) * -1));
   filter: blur(var(--list-item-blur));
+  will-change: transform, opacity, filter;
 }
 .t-list-item[data-state="idle"] {
   opacity: 1;
@@ -3109,6 +3108,7 @@ html {
   filter: blur(var(--list-item-blur));
   pointer-events: none;
   transition-duration: var(--list-item-exit-dur);
+  will-change: transform, opacity, filter;
 }
 
 @media (prefers-reduced-motion: reduce) {
