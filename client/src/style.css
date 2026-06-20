@@ -22,17 +22,19 @@
   --gray-800: #212121;
   --gray-850: #171717;
   --gray-900: #0d0d0d;
-  --green-50: #ecfdf5;
-  --green-100: #d1fae5;
-  --green-200: #a7f3d0;
-  --green-300: #6ee7b7;
-  --green-400: #34d399;
-  --green-500: #10b981;
-  --green-600: #059669;
-  --green-700: #047857;
-  --green-800: #065f46;
-  --green-900: #064e3b;
-  --green-950: #022c22;
+  /* BOBAI brand palette (Bank of Baroda orange) — repurposes the "green" accent
+     slots so submit buttons and brand accents render in BOB orange. */
+  --green-50: #fff3ee;
+  --green-100: #ffe1d3;
+  --green-200: #ffc2a6;
+  --green-300: #ff9d70;
+  --green-400: #fa7a43;
+  --green-500: #f15a22;
+  --green-600: #d8480f;
+  --green-700: #c8431a;
+  --green-800: #a5360f;
+  --green-900: #7c2c14;
+  --green-950: #431505;
   --red-50: #fef2f2;
   --red-100: #fee2e2;
   --red-200: #fecaca;
@@ -55,7 +57,7 @@
   --amber-800: #92400e;
   --amber-900: #78350f;
   --amber-950: #451a03;
-  --brand-purple: #ab68ff;
+  --brand-purple: #f15a22;
   --gizmo-gray-500: #999;
   --gizmo-gray-600: #666;
   --gizmo-gray-950: #0f0f0f;
@@ -67,7 +69,7 @@
   --markdown-font-size: 1rem;
 }
 html {
-  --brand-purple: #ab68ff;
+  --brand-purple: #f15a22;
   --presentation: var(--white);
   --text-primary: var(--gray-800);
   --text-secondary: var(--gray-600);
@@ -130,7 +132,7 @@ html {
   --switch-unchecked: 0 0% 58%;
 }
 .dark {
-  --brand-purple: #ab68ff;
+  --brand-purple: #f15a22;
   --presentation: var(--gray-800);
   --text-primary: var(--gray-100);
   --text-secondary: var(--gray-300);
